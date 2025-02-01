@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { User, userForm } from './schema/user';
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -30,12 +29,7 @@ export default function UserForm() {
     resolver: zodResolver(userForm),
   });
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = form;
+  const { control, handleSubmit } = form;
 
   useEffect(() => {
     fetch('/api/users', { method: 'GET' })
@@ -106,7 +100,7 @@ export default function UserForm() {
       </Card>
       <div className='mt-4'>
         <h2 className='text-xl'>Users</h2>
-        {users?.map((user: any) => (
+        {users?.map((user: KnownUser) => (
           <div key={user.id} className='p-2 border-b'>
             {user.name} ({user.email})
           </div>
