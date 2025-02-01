@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-let users: { id: number; name: string; email: string; age: number }[] = [];
+const users: { id: number; name: string; email: string; age: number }[] = [];
 
 export async function GET() {
   const storedUsers = localStorage.get('users') || '';
