@@ -1,9 +1,16 @@
 'use client';
 
-import UserForm from './UserForm';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import UsersPage from './users/page';
+
+const queryClient = new QueryClient();
 
 const Home = () => {
-  return <UserForm />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <UsersPage />
+    </QueryClientProvider>
+  );
 };
 
 export default Home;
