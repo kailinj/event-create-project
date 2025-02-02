@@ -14,8 +14,9 @@ export const userForm = z.object({
     })
     .refine((age) => Number(age) >= 1, {
       message: 'Age must be a positive number.',
-    })
-    .transform((val) => Number(val)), // Convert string to number
+    }),
+  custom: z.string().optional(),
+  // .transform((val) => Number(val)), // Convert string to number
 });
 
 export type FormUser = z.infer<typeof userForm>;
