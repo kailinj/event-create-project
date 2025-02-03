@@ -18,28 +18,15 @@ import {
 import { useMemo } from 'react';
 import { generations } from './generations';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { User } from '../schema/user';
 
-// const chartData = [
-//   { month: 'January', desktop: 186, mobile: 80 },
-//   { month: 'February', desktop: 305, mobile: 200 },
-//   { month: 'March', desktop: 237, mobile: 120 },
-//   { month: 'April', desktop: 73, mobile: 190 },
-//   { month: 'May', desktop: 209, mobile: 130 },
-//   { month: 'June', desktop: 214, mobile: 140 },
-// ];
-
-// const chartConfig = {
-//   desktop: {
-//     label: 'Desktop',
-//     color: '#2563eb',
-//   },
-//   mobile: {
-//     label: 'Mobile',
-//     color: '#60a5fa',
-//   },
-// } satisfies ChartConfig;
-
-export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
+export function UsersChartBar({
+  keys,
+  data,
+}: {
+  keys: string[];
+  data: User[];
+}) {
   const config = Object.fromEntries(
     keys.map((key, index) => [
       key,
@@ -59,7 +46,7 @@ export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
         ?.map((d) => ({
           ...d,
           generation: generations.find((g) => {
-            const birthYear = currentYear - d.age;
+            const birthYear = currentYear - Number(d.age);
             return birthYear >= g.minYear && birthYear <= g.maxYear;
           }),
         })),
@@ -70,7 +57,6 @@ export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
     <Card className='flex-grow'>
       <CardHeader>
         <CardTitle>User ages</CardTitle>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
         <ChartContainer config={config} className='max-h-[300px] w-full d-flex'>
@@ -82,7 +68,6 @@ export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
                 dataKey={key}
                 fill={config[key].color}
                 radius={4}
-                // label
                 style={{ color: 'white' }}
               >
                 <LabelList dataKey='age' position='top' />

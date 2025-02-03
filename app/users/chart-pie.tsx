@@ -18,8 +18,9 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { generations } from './generations';
+import { User } from '../schema/user';
 
-export function UsersChartPie({ data }: { keys: string[]; data: any[] }) {
+export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
   const currentYear = new Date().getFullYear();
 
   const chartData = React.useMemo(
@@ -113,22 +114,10 @@ export function UsersChartPie({ data }: { keys: string[]; data: any[] }) {
                 }}
               />
             </Pie>
-            <ChartLegend
-            // layout='vertical'
-            // align='right'
-            // verticalAlign='middle'
-            />
+            <ChartLegend />
           </PieChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter> */}
     </Card>
   );
 }

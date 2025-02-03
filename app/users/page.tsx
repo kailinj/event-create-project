@@ -6,9 +6,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import UserDialog from './dialog';
 import { UsersChartPie } from './chart-pie';
-import { UsersChart } from './chart';
+import { UsersChartBar } from './chart-bar';
 import { ActiveUser, User } from '../schema/user';
 import { Card, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 async function fetchUsers(): Promise<User[]> {
   const res = await fetch('/api/users', {
@@ -23,7 +24,6 @@ export default function UsersPage() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<ActiveUser>(undefined);
 
-  // Fetch users with React Query
   const {
     data: users = [],
     error,
@@ -33,7 +33,6 @@ export default function UsersPage() {
     queryFn: fetchUsers,
   });
 
-  if (isLoading) return <p>Loading users...</p>;
   if (error) return <p>Error loading users</p>;
 
   return (
@@ -49,19 +48,25 @@ export default function UsersPage() {
             setUser={setUser}
           />
         </CardHeader>
-        <DataTable
-          columns={columns}
-          data={users}
-          handleEdit={(data: User) => {
-            setUser(data);
-            setOpen(true);
-          }}
-        />
+        {isLoading ? (
+          <Skeleton className='h-[400px] rounded-xl mx-8 mb-16' />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={users}
+            handleEdit={(data: User) => {
+              setUser(data);
+              setOpen(true);
+            }}
+          />
+        )}
       </Card>
-      <div className='flex md:flex-row flex-col justify-between gap-8'>
-        <UsersChart data={users} keys={['age']} />
-        <UsersChartPie data={users} keys={['age']} />
-      </div>
+      {!isLoading && (
+        <div className='flex md:flex-row flex-col justify-between gap-8'>
+          <UsersChartPie data={users} keys={['age']} />
+          <UsersChartBar data={users} keys={['age']} />
+        </div>
+      )}
     </div>
   );
 }

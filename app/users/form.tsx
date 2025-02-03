@@ -24,7 +24,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-// Add user function
 async function addUser(newUser: User): Promise<User> {
   const res = await fetch('/api/users', {
     method: 'POST',
@@ -35,7 +34,6 @@ async function addUser(newUser: User): Promise<User> {
   return res.json();
 }
 
-// Edit user function
 async function updateUser(updatedUser: User): Promise<User> {
   const res = await fetch(`/api/users/${updatedUser.id}`, {
     method: 'PATCH',
@@ -157,13 +155,11 @@ export default function UserForm({
     form.reset();
   };
 
-  // Mutation for adding a user
   const newUser = useMutation({
     mutationFn: addUser,
     onSuccess: handleSuccess,
   });
 
-  // Mutation for updating a user
   const existingUser = useMutation({
     mutationFn: updateUser,
     onSuccess: handleSuccess,
