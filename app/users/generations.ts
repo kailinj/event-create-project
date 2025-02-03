@@ -1,4 +1,4 @@
-export const generations = [
+export const Generations = [
   {
     name: 'Baby boomers',
     minYear: 1946,

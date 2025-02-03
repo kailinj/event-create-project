@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { ActiveUser } from '../schema/user';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import UserForm from './form';
+import UserForm from './UserForm';
 
 export default function UserDialog({
   open,

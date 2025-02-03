@@ -1,15 +1,15 @@
 'use client';
 
-import { DataTable } from '../../components/ui/data-table';
-import { columns } from './columns';
+import { Card, CardHeader } from '@/components/ui/card';
+import { DataTable } from '@/components/ui/data-table';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import UserDialog from './dialog';
-import { UsersChartPie } from './chart-pie';
-import { UsersChartBar } from './chart-bar';
 import { ActiveUser, User } from '../schema/user';
-import { Card, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { UsersChartBar } from './UsersChartBar';
+import { UsersChartPie } from './UsersChartPie';
+import { Columns } from './Columns';
+import UserDialog from './UserDialog';
 
 async function fetchUsers(): Promise<User[]> {
   const res = await fetch('/api/users', {
@@ -52,7 +52,7 @@ export default function UsersPage() {
           <Skeleton className='h-[400px] rounded-xl mx-8 mb-16' />
         ) : (
           <DataTable
-            columns={columns}
+            columns={Columns}
             data={users}
             handleEdit={(data: User) => {
               setUser(data);

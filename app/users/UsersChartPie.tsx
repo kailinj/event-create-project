@@ -17,7 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { generations } from './generations';
+import { Generations } from './Generations';
 import { User } from '../schema/user';
 
 export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
@@ -25,20 +25,18 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
 
   const chartData = React.useMemo(
     () =>
-      generations
-        .map((g) => {
-          const members = data?.filter((d) => {
-            const birthYear = currentYear - Number(d.age);
-            return birthYear >= g.minYear && birthYear <= g.maxYear;
-          });
-          return {
-            ...g,
-            members,
-            value: members?.length,
-            fill: g.color,
-          };
-        })
-        .filter((g) => g.value > 0),
+      Generations.map((g) => {
+        const members = data?.filter((d) => {
+          const birthYear = currentYear - Number(d.age);
+          return birthYear >= g.minYear && birthYear <= g.maxYear;
+        });
+        return {
+          ...g,
+          members,
+          value: members?.length,
+          fill: g.color,
+        };
+      }).filter((g) => g.value > 0),
     [currentYear, data]
   );
 
