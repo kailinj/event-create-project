@@ -21,6 +21,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { DataTablePagination } from './data-table-pagination';
+import { DataTableHeaderSortable } from '@/components/ui/data-table-header-sortable';
+import { Pencil } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,7 +32,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  handleEdit,
+}: DataTableProps<TData, TValue> & { handleEdit: (data: TData) => void }) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -63,12 +66,7 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      <DataTableHeaderSortable {...header.getContext()} />
                     </TableHead>
                   );
                 })}
@@ -84,9 +82,15 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                      {cell.column.columnDef.id === 'actions' ? (
+                        <Button onClick={() => handleEdit(row.original)}>
+                          <Pencil />
+                        </Button>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )
                       )}
                     </TableCell>
                   ))}

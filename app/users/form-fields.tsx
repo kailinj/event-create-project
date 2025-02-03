@@ -10,12 +10,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { FormUser } from '../schema/user';
+import { User } from '../schema/user';
 
 export default function UserFormFields({
   form,
 }: {
-  form: UseFormReturn<FieldValues, FormUser, undefined>;
+  form: UseFormReturn<FieldValues, User, undefined>;
 }) {
   return (
     <>

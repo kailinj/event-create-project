@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { User } from '@prisma/client';
 
 export const userForm = z.object({
   name: z.string().min(1, { message: 'Please enter your name.' }),
@@ -8,7 +7,7 @@ export const userForm = z.object({
     .min(1, { message: 'Please enter your email address.' })
     .email('Please enter a valid email address.'),
   age: z
-    .string()
+    .number({ coerce: true })
     .min(1, {
       message: 'Please enter your age.',
     })
@@ -16,8 +15,14 @@ export const userForm = z.object({
       message: 'Age must be a positive number.',
     }),
   custom: z.string().optional(),
-  // .transform((val) => Number(val)), // Convert string to number
 });
 
-export type FormUser = z.infer<typeof userForm>;
-export type DbUser = User;
+export type User = {
+  id?: number;
+  name: string;
+  email: string;
+  age: number;
+  custom?: unknown;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
