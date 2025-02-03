@@ -1,11 +1,13 @@
 'use client';
 
-import { User } from '@prisma/client';
 import { DataTable } from '../../components/ui/data-table';
 import { columns } from './columns';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import UserDialog from './dialog';
+import { UsersChartPie } from './chart-pie';
+import { UsersChart } from './chart';
+import { ActiveUser, User } from '../schema/user';
 
 async function fetchUsers(): Promise<User[]> {
   const res = await fetch('/api/users', {
@@ -18,7 +20,7 @@ async function fetchUsers(): Promise<User[]> {
 
 export default function UsersPage() {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<ActiveUser>(undefined);
 
   // Fetch users with React Query
   const {
@@ -36,7 +38,7 @@ export default function UsersPage() {
   return (
     <div className='p-6 mx-auto'>
       <div className='mt-4'>
-        <div className='flex flex-row justify-between items-center'>
+        <div className='flex flex-row justify-between items-center mb-2'>
           <h2 className='text-xl'>Users</h2>
           <UserDialog
             open={open}
@@ -49,11 +51,12 @@ export default function UsersPage() {
           columns={columns}
           data={users}
           handleEdit={(data: User) => {
-            console.log(data);
             setUser(data);
             setOpen(true);
           }}
         />
+        <UsersChart data={users} keys={['age']} />
+        <UsersChartPie data={users} keys={['age']} />
       </div>
     </div>
   );

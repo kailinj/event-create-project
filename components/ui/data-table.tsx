@@ -19,10 +19,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableHeaderSortable } from '@/components/ui/data-table-header-sortable';
 import { Pencil } from 'lucide-react';
+import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -43,21 +43,13 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    initialState: {
-      sorting: [
-        {
-          id: 'name',
-          desc: false,
-        },
-      ],
-    },
     state: {
       sorting,
     },
   });
 
   return (
-    <div>
+    <div className='data-table'>
       <div className='rounded-md border'>
         <Table>
           <TableHeader>
@@ -83,7 +75,11 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {cell.column.columnDef.id === 'actions' ? (
-                        <Button onClick={() => handleEdit(row.original)}>
+                        <Button
+                          onClick={() => handleEdit(row.original)}
+                          variant='ghost'
+                          size='icon'
+                        >
                           <Pencil />
                         </Button>
                       ) : (
@@ -110,24 +106,6 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
-      <div className='flex items-center justify-end space-x-2 py-4'>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
     </div>
   );
 }

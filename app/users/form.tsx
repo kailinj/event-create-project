@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
-import { User, userForm } from '../schema/user';
+import { ActiveUser, User, userForm } from '../schema/user';
 import {
   DialogDescription,
   DialogFooter,
@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
 // Add user function
@@ -47,42 +47,103 @@ async function updateUser(updatedUser: User): Promise<User> {
 }
 
 export default function UserForm({
+  open,
   setOpen,
   setUser,
   user,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  setUser: (user: User | undefined) => void;
-  user?: User;
+  setUser: (user: ActiveUser) => void;
+  user?: ActiveUser;
 }) {
   const queryClient = useQueryClient();
 
-  const [withCustomField, setWithCustomField] = useState(false);
+  const [customLabel, setCustomLabel] = useState('');
+  const [customValue, setCustomValue] = useState('');
+  const [isAddingCustomField, setIsAddingCustomField] = useState(false);
+  const [isRemovingCustomField, setIsRemovingCustomField] = useState(false);
+
   const isEditing = !!user;
 
   const { toast } = useToast();
 
-  const form = useForm({
-    resolver: zodResolver(userForm),
-    defaultValues: {
-      custom: '',
+  const defaultValues = useMemo(
+    () => ({
+      custom: {},
       name: '',
       email: '',
-      age: 0,
-    },
+      age: '',
+    }),
+    []
+  );
+
+  const hasCustomValue = useMemo(
+    () => user && user?.custom && Object.keys(user.custom)?.length > 0,
+    [user]
+  );
+
+  const customFieldVisible = useMemo(
+    () => (hasCustomValue || isAddingCustomField) && !isRemovingCustomField,
+    [hasCustomValue, isAddingCustomField, isRemovingCustomField]
+  );
+
+  const form = useForm({
+    resolver: zodResolver(userForm),
+    defaultValues: defaultValues,
     ...(user
       ? {
           values: {
             ...user,
+            age: String(user.age),
             custom:
-              user && user?.custom && user?.custom?.length > 0
+              user && user?.custom && Object.keys(user.custom)?.length > 0
                 ? user?.custom
-                : '',
+                : {},
           },
         }
       : {}),
   });
+
+  const closeDialog = useCallback(() => {
+    const formValues = form.getValues();
+    if (
+      (formValues.custom && Object.keys(formValues.custom)?.length > 0) ||
+      formValues.name !== '' ||
+      formValues.email !== '' ||
+      formValues.age !== ''
+    ) {
+      setUser(undefined);
+      form.reset(defaultValues);
+    }
+  }, [defaultValues, form, setUser]);
+
+  useEffect(() => {
+    if (open === false) {
+      closeDialog();
+    } else {
+      if (
+        hasCustomValue &&
+        !isRemovingCustomField &&
+        typeof user?.custom === 'object'
+      ) {
+        const customValues = Object.entries(Object(user.custom));
+        if (customValues?.length > 0 && customValues[0]?.length > 0) {
+          setCustomLabel(String(customValues[0][0]));
+          setCustomValue(String(customValues[0][1]));
+        }
+      }
+    }
+  }, [
+    closeDialog,
+    defaultValues,
+    form,
+    hasCustomValue,
+    isRemovingCustomField,
+    open,
+    setUser,
+    user?.custom,
+  ]);
 
   const handleSuccess = (data: User) => {
     queryClient.invalidateQueries({ queryKey: ['users'] });
@@ -168,20 +229,44 @@ export default function UserForm({
           )}
         />
 
-        {withCustomField ? (
+        {customFieldVisible ? (
           <FormField
             control={form.control}
             name='custom'
-            render={({ field }) => (
+            render={({}) => (
               <FormItem>
                 <FormLabel>Custom field</FormLabel>
                 <FormControl>
                   <div className='flex items-center space-x-2'>
-                    <Input placeholder='Custom field' {...field} />
+                    <Input
+                      placeholder='Label'
+                      value={customLabel}
+                      onChange={(e) => {
+                        setCustomLabel(e.target.value);
+                        form.setValue('custom', {
+                          [e.target.value]: customValue,
+                        });
+                      }}
+                    />
+                    <Input
+                      placeholder='Value'
+                      value={customValue}
+                      onChange={(e) => {
+                        setCustomValue(e.target.value);
+                        form.setValue('custom', {
+                          [customLabel]: e.target.value,
+                        });
+                      }}
+                    />
                     <Button
                       onClick={() => {
-                        setWithCustomField(false);
-                        form.setValue('custom', '');
+                        setIsAddingCustomField(false);
+                        setCustomValue('');
+                        setCustomLabel('');
+                        form.setValue('custom', {});
+                        if (hasCustomValue) {
+                          setIsRemovingCustomField(true);
+                        }
                       }}
                       variant='outline'
                       size='sm'
@@ -196,7 +281,12 @@ export default function UserForm({
           />
         ) : (
           <Button
-            onClick={() => setWithCustomField(true)}
+            onClick={() => {
+              setIsAddingCustomField(true);
+              if (isRemovingCustomField) {
+                setIsRemovingCustomField(false);
+              }
+            }}
             variant='outline'
             size='sm'
           >
@@ -204,6 +294,16 @@ export default function UserForm({
           </Button>
         )}
         <DialogFooter>
+          <Button
+            type='button'
+            variant={'ghost'}
+            onClick={() => {
+              setOpen(false);
+              closeDialog();
+            }}
+          >
+            Cancel
+          </Button>
           <Button type='submit'>{user ? 'Save' : 'Create'}</Button>
         </DialogFooter>
       </form>
