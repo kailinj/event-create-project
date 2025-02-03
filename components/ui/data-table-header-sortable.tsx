@@ -13,7 +13,11 @@ export function DataTableHeaderSortable<TData>({
 }: HeaderContext<TData, unknown>) {
   const columnName: string = useMemo(() => String(column?.id), [column?.id]);
   return columnName === 'actions' ? null : (
-    <Button variant='ghost' onClick={() => column.toggleSorting()}>
+    <Button
+      variant='ghost'
+      onClick={() => column.toggleSorting()}
+      className='px-0'
+    >
       {String(columnName[0]).toLocaleUpperCase() + columnName.slice(1)}
       {column.getIsSorted() === 'asc' ? (
         <ArrowUp {...iconProps} />

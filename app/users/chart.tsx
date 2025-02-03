@@ -1,8 +1,20 @@
 'use client';
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
-import { ChartConfig, ChartContainer } from '@/components/ui/chart';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 import { useMemo } from 'react';
 import { generations } from './generations';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -55,7 +67,7 @@ export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
   );
 
   return (
-    <Card>
+    <Card className='flex-grow'>
       <CardHeader>
         <CardTitle>User ages</CardTitle>
         {/* <CardDescription>January - June 2024</CardDescription> */}
@@ -63,17 +75,22 @@ export function UsersChart({ keys, data }: { keys: string[]; data: any[] }) {
       <CardContent>
         <ChartContainer config={config} className='max-h-[300px] w-full d-flex'>
           <BarChart accessibilityLayer data={chartData}>
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             {keys.map((key) => (
               <Bar
                 key={key}
                 dataKey={key}
                 fill={config[key].color}
                 radius={4}
-              />
+                // label
+                style={{ color: 'white' }}
+              >
+                <LabelList dataKey='age' position='top' />
+              </Bar>
             ))}
             <CartesianGrid vertical={false} />
             <YAxis dataKey='age' />
-            <XAxis dataKey='name' />
+            <XAxis dataKey='name' interval={0} />
           </BarChart>
         </ChartContainer>
       </CardContent>

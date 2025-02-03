@@ -27,7 +27,7 @@ export default function UserDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button>Add user</Button>
+        <Button className='mt-0'>Add user</Button>
       </DialogTrigger>
       <DialogContent>
         {open && (

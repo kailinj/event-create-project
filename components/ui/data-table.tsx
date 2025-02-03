@@ -23,6 +23,7 @@ import { DataTablePagination } from './data-table-pagination';
 import { DataTableHeaderSortable } from '@/components/ui/data-table-header-sortable';
 import { Pencil } from 'lucide-react';
 import { useState } from 'react';
+import { CardContent, CardFooter } from './card';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,15 +50,20 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className='data-table'>
-      <div className='rounded-md border'>
-        <Table>
+    <>
+      <CardContent className='data-table'>
+        <Table className='border'>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        header.column.id === 'age' ? 'text-right pr-6' : ''
+                      }
+                    >
                       <DataTableHeaderSortable {...header.getContext()} />
                     </TableHead>
                   );
@@ -73,9 +79,19 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={
+                        cell.column.columnDef.id === 'actions'
+                          ? 'text-center'
+                          : cell.column.columnDef.header === 'Age'
+                          ? 'text-right pr-6'
+                          : 'text-left'
+                      }
+                    >
                       {cell.column.columnDef.id === 'actions' ? (
                         <Button
+                          className='text-center'
                           onClick={() => handleEdit(row.original)}
                           variant='ghost'
                           size='icon'
@@ -104,8 +120,10 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
-      <DataTablePagination table={table} />
-    </div>
+      </CardContent>
+      <CardFooter className='justify-end'>
+        <DataTablePagination table={table} />
+      </CardFooter>
+    </>
   );
 }

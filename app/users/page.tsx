@@ -8,6 +8,7 @@ import UserDialog from './dialog';
 import { UsersChartPie } from './chart-pie';
 import { UsersChart } from './chart';
 import { ActiveUser, User } from '../schema/user';
+import { Card, CardHeader } from '@/components/ui/card';
 
 async function fetchUsers(): Promise<User[]> {
   const res = await fetch('/api/users', {
@@ -36,9 +37,10 @@ export default function UsersPage() {
   if (error) return <p>Error loading users</p>;
 
   return (
-    <div className='p-6 mx-auto'>
-      <div className='mt-4'>
-        <div className='flex flex-row justify-between items-center mb-2'>
+    <div className='p-6 mx-auto flex flex-col gap-4'>
+      <h1 className='text-3xl'>User management</h1>
+      <Card>
+        <CardHeader className='flex flex-row items-center space-y-0 justify-between'>
           <h2 className='text-xl'>Users</h2>
           <UserDialog
             open={open}
@@ -46,7 +48,7 @@ export default function UsersPage() {
             user={user}
             setUser={setUser}
           />
-        </div>
+        </CardHeader>
         <DataTable
           columns={columns}
           data={users}
@@ -55,6 +57,8 @@ export default function UsersPage() {
             setOpen(true);
           }}
         />
+      </Card>
+      <div className='flex md:flex-row flex-col justify-between gap-8'>
         <UsersChart data={users} keys={['age']} />
         <UsersChartPie data={users} keys={['age']} />
       </div>
