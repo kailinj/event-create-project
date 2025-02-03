@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ActiveUser, User } from '../schema/user';
 import { UsersChartBar } from './UsersChartBar';
 import { UsersChartPie } from './UsersChartPie';
-import { Columns } from './Columns';
+import { UserTableColumns } from './UserTableColumns';
 import UserDialog from './UserDialog';
 
 async function fetchUsers(): Promise<User[]> {
@@ -52,7 +52,7 @@ export default function UsersPage() {
           <Skeleton className='h-[400px] rounded-xl mx-8 mb-16' />
         ) : (
           <DataTable
-            columns={Columns}
+            columns={UserTableColumns}
             data={users}
             handleEdit={(data: User) => {
               setUser(data);

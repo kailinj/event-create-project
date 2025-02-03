@@ -16,7 +16,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useMemo } from 'react';
-import { Generations } from './Generations';
+import { UserGenerations } from './UserGenerations';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { User } from '../schema/user';
 
@@ -45,7 +45,7 @@ export function UsersChartBar({
         ?.sort((a, b) => String(a?.name).localeCompare(b?.name))
         ?.map((d) => ({
           ...d,
-          generation: Generations.find((g) => {
+          generation: UserGenerations.find((g) => {
             const birthYear = currentYear - Number(d.age);
             return birthYear >= g.minYear && birthYear <= g.maxYear;
           }),
