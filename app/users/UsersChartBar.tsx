@@ -66,9 +66,9 @@ export function UsersChartBar({
               <Bar
                 key={key}
                 dataKey={key}
-                fill={config[key].color}
+                fill='#374c80'
                 radius={4}
-                stackId='a' // Keep stacking behavior
+                stackId='a'
               >
                 <LabelList dataKey={key} position='right' />
               </Bar>

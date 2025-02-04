@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
     <>
       <CardContent className='data-table'>
         <Table className='border'>
-          <TableHeader>
+          <TableHeader className='bg-secondary'>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
