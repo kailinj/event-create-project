@@ -74,11 +74,11 @@ Build a responsive single-page application (SPA) using React that allows a user 
 - [**@faker-js/faker**](https://fakerjs.dev/): Used along with playwright to generate mock data for testing.
 
 ### Items of note & takeaways
-- I know that the "age" chart isn't very realistic and the x-axis quickly runs out of room, but I figured displaying multiple charts using the proposed data structure was better than introducing additional properties merely for the benefit of a nice-looking chart. Some other charts that I considered were:
+- I know that the "age" chart isn't a very realistic use case, but I figured displaying multiple charts using the proposed data structure was better than introducing additional properties merely for the benefit of a nice-looking chart. Some other charts that I considered were:
     - Users created over time
     - Number of users per age
 - I wasn't sure if the custom field was supposed to be a single string or a key-value pair, but figured that the latter would be more useful.
-- Using Next.js may not have been the best choice for this project, as the directory structure & naming conventions don't necessarily align with how I like to organize React-only FE apps.
+- Using Next.js may not have been the best choice for this project, as the directory structure & naming conventions don't necessarily align with how I like to organize React-only FE apps, but hopefully it isn't too difficult to navigate.
 - I created some basic Playwright tests, but given more time I would have been more intentional in what functionality I was testing and how I was selecting items in the UI
   - Ideally, I would use an attribute that is unlikely to change, even if the copy does (something like `[data-test-id]`)
 
