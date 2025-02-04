@@ -67,7 +67,7 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
           config={config}
-          className='mx-auto w-full max-h-[300px]'
+          className='mx-auto w-full min-h-[300px]'
         >
           <PieChart>
             <ChartTooltip

@@ -59,8 +59,8 @@ export function UsersChartBar({
         <CardTitle>User ages</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={config} className='max-h-[300px] w-full d-flex'>
-          <BarChart accessibilityLayer data={chartData}>
+        <ChartContainer config={config} className='min-h-[300px] w-full d-flex'>
+          <BarChart layout='vertical' accessibilityLayer data={chartData}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             {keys.map((key) => (
               <Bar
@@ -68,14 +68,14 @@ export function UsersChartBar({
                 dataKey={key}
                 fill={config[key].color}
                 radius={4}
-                style={{ color: 'white' }}
+                stackId='a' // Keep stacking behavior
               >
-                <LabelList dataKey='age' position='top' />
+                <LabelList dataKey={key} position='right' />
               </Bar>
             ))}
-            <CartesianGrid vertical={false} />
-            <YAxis dataKey='age' />
-            <XAxis dataKey='name' interval={0} />
+            <CartesianGrid horizontal={false} />
+            <YAxis dataKey='name' type='category' width={100} />
+            <XAxis dataKey='age' type='number' />
           </BarChart>
         </ChartContainer>
       </CardContent>
