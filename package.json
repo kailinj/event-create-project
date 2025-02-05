@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "start": "next start",
+    "build": "next build --experimental-build-mode compile",
     "lint": "next lint"
   },
   "prisma": {

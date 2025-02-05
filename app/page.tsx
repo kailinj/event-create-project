@@ -3,9 +3,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UsersPage from './users/page';
 
-const queryClient = new QueryClient();
-
 const Home = () => {
+  const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <UsersPage />
