@@ -59,7 +59,7 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
   const totalUsers = React.useMemo(() => data.length, [data]);
 
   return (
-    <Card className='flex flex-col min-w-[400px]'>
+    <Card className='md:col-span-2 col-span-1'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>User counts</CardTitle>
         <CardDescription>Total users & users per generation</CardDescription>

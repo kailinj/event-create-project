@@ -54,7 +54,7 @@ export function UsersChartBar({
   );
 
   return (
-    <Card className='flex-grow'>
+    <Card className='md:col-span-3 col-span-1'>
       <CardHeader>
         <CardTitle>User ages</CardTitle>
       </CardHeader>

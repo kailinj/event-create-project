@@ -36,9 +36,8 @@ export default function UsersPage() {
   if (error) return <p>Error loading users</p>;
 
   return (
-    <div className='p-6 mx-auto flex flex-col gap-4'>
-      <h1 className='text-3xl'>User management</h1>
-      <Card>
+    <div className='p-6 mx-auto grid grid-cols-1 md:grid-cols-5 gap-4'>
+      <Card className='col-span-5'>
         <CardHeader className='flex flex-row items-center space-y-0 justify-between'>
           <h2 className='text-xl'>Users</h2>
           <UserDialog
@@ -62,10 +61,10 @@ export default function UsersPage() {
         )}
       </Card>
       {!isLoading && (
-        <div className='flex md:flex-row flex-col justify-between gap-8'>
+        <>
           <UsersChartPie data={users} keys={['age']} />
           <UsersChartBar data={users} keys={['age']} />
-        </div>
+        </>
       )}
     </div>
   );

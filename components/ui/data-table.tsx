@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <CardContent className='data-table'>
-        <Table className='border'>
+        <Table>
           <TableHeader className='bg-secondary'>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -96,7 +96,7 @@ export function DataTable<TData, TValue>({
                           variant='ghost'
                           size='icon'
                         >
-                          <Pencil />
+                          <Pencil className='text-primary' />
                         </Button>
                       ) : (
                         flexRender(
