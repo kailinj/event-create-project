@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "start": "next start",
     "build": "next build --experimental-build-mode compile",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
