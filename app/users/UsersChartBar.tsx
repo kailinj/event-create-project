@@ -9,6 +9,7 @@ import {
   YAxis,
 } from 'recharts';
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
@@ -16,8 +17,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useMemo } from 'react';
-import { UserGenerations } from './UserGenerations';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { User } from '../schema/user';
 
 export function UsersChartBar({
@@ -37,20 +36,9 @@ export function UsersChartBar({
     ])
   ) as ChartConfig;
 
-  const currentYear = new Date().getFullYear();
-
   const chartData = useMemo(
-    () =>
-      data
-        ?.sort((a, b) => String(a?.name).localeCompare(b?.name))
-        ?.map((d) => ({
-          ...d,
-          generation: UserGenerations.find((g) => {
-            const birthYear = currentYear - Number(d.age);
-            return birthYear >= g.minYear && birthYear <= g.maxYear;
-          }),
-        })),
-    [currentYear, data]
+    () => data?.sort((a, b) => String(a?.name).localeCompare(b?.name)),
+    [data]
   );
 
   return (
@@ -66,7 +54,8 @@ export function UsersChartBar({
               <Bar
                 key={key}
                 dataKey={key}
-                fill='#374c80'
+                fill={'#374c80'}
+                color={'#374c80'}
                 radius={4}
                 stackId='a'
               >
@@ -75,7 +64,12 @@ export function UsersChartBar({
             ))}
             <CartesianGrid horizontal={false} />
             <YAxis dataKey='name' type='category' width={100} />
-            <XAxis dataKey='age' type='number' />
+            <XAxis
+              dataKey='age'
+              type='number'
+              axisLine={false}
+              tickLine={false}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

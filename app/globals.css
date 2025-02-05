@@ -27,7 +27,6 @@ body {
   :root {
     --background: 0 0% 100%;
     --background-gradient: linear-gradient(135deg, #e3e6ee, #f8f9fc);
-    /* --background-gradient: linear-gradient(45deg, rgb(100% 98% 98%), rgb(94.9% 94.9% 94.9%), rgb(90.2% 90.2% 90.2%), rgb(85.1% 85.1% 85.1%), rgb(80% 80% 80%)); */
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -47,11 +46,11 @@ body {
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 228 50% 40%;
+    --chart-2: 300 38% 45%;
+    --chart-3: 339 77% 59%;
+    --chart-4: 14 100% 66%;
+    --chart-5: 39 100% 66%;
   }
 
   .dark {
@@ -74,11 +73,11 @@ body {
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 228 50% 40%;
+    --chart-2: 300 38% 45%;
+    --chart-3: 339 77% 59%;
+    --chart-4: 14 100% 66%;
+    --chart-5: 39 100% 66%;
   }
 }
 

@@ -25,7 +25,7 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
 
   const chartData = React.useMemo(
     () =>
-      UserGenerations.map((g) => {
+      UserGenerations.map((g, index) => {
         const members = data?.filter((d) => {
           const birthYear = currentYear - Number(d.age);
           return birthYear >= g.minYear && birthYear <= g.maxYear;
@@ -34,7 +34,7 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
           ...g,
           members,
           value: members?.length,
-          fill: g.color,
+          fill: `hsl(var(--chart-${index + 1}))`,
         };
       }).filter((g) => g.value > 0),
     [currentYear, data]
@@ -74,7 +74,6 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-
             <Pie
               data={chartData}
               dataKey='value'
