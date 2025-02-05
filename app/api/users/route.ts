@@ -8,7 +8,10 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const users = await prisma.user.findMany();
-    return NextResponse.json(users, { status: 200 });
+    return NextResponse.json(
+      users.sort((a, b) => a.name.localeCompare(b.name)),
+      { status: 200 }
+    );
   } catch {
     return NextResponse.json(
       { error: 'Error fetching users' },

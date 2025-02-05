@@ -35,7 +35,9 @@ export function DataTable<TData, TValue>({
   data,
   handleEdit,
 }: DataTableProps<TData, TValue> & { handleEdit: (data: TData) => void }) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: 'name', desc: false },
+  ]);
 
   const table = useReactTable({
     data,
@@ -53,7 +55,7 @@ export function DataTable<TData, TValue>({
     <>
       <CardContent className='data-table'>
         <Table>
-          <TableHeader className='bg-secondary'>
+          <TableHeader className='border-b-2'>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

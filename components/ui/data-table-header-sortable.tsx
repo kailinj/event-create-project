@@ -6,7 +6,8 @@ import { HeaderContext } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { useMemo } from 'react';
 
-const iconProps = { className: 'ml-2 h-4 w-4 opacity-50' };
+const iconSpacing = 'ml-2 h-4 w-4';
+const sortedIconProps = { className: `${iconSpacing} opacity-50` };
 
 export function DataTableHeaderSortable<TData>({
   column,
@@ -21,11 +22,11 @@ export function DataTableHeaderSortable<TData>({
     >
       {String(columnName[0]).toLocaleUpperCase() + columnName.slice(1)}
       {column.getIsSorted() === 'asc' ? (
-        <ArrowUp {...iconProps} />
+        <ArrowUp {...sortedIconProps} />
       ) : column.getIsSorted() === 'desc' ? (
-        <ArrowDown {...iconProps} />
+        <ArrowDown {...sortedIconProps} />
       ) : (
-        <ArrowUpDown className={`${iconProps.className} opacity-25`} />
+        <ArrowUpDown className={`opacity-25 ${iconSpacing}`} />
       )}
     </Button>
   );
