@@ -2,24 +2,24 @@ import { JsonValue } from '@prisma/client/runtime/library';
 import { z } from 'zod';
 
 export const userForm = z.object({
-  name: z.string().min(1, { message: 'Please enter your name.' }),
+  name: z.string().min(1, { message: 'Name is required' }),
   email: z
     .string()
-    .min(1, { message: 'Please enter your email address.' })
-    .email('Please enter a valid email address.'),
+    .min(1, { message: 'Email address is required' })
+    .email('Invalid email address'),
   age: z
     .string()
     .min(1, {
-      message: 'Please enter your age.',
+      message: 'Age is required',
     })
     .refine((age) => Number(age) >= 1, {
-      message: 'Age must be a positive number.',
+      message: 'Age must be a positive number',
     })
     .transform((age) => Number(age)),
   custom: z
     .record(
-      z.string().min(1, { message: 'Please enter a label.' }),
-      z.string().min(1, { message: 'Please enter a value.' })
+      z.string().min(1, { message: 'Label is required' }),
+      z.string().min(1, { message: 'Value is required' })
     )
     .optional(),
 });
