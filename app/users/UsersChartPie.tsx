@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -59,7 +60,7 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
   const totalUsers = React.useMemo(() => data.length, [data]);
 
   return (
-    <Card className='md:col-span-2 col-span-1'>
+    <Card className='md:col-span-2 col-span-1 flex flex-col'>
       <CardHeader className='items-center pb-0'>
         <CardTitle>User counts</CardTitle>
         <CardDescription>Total users & users per generation</CardDescription>
@@ -115,6 +116,21 @@ export function UsersChartPie({ data }: { keys: string[]; data: User[] }) {
           </PieChart>
         </ChartContainer>
       </CardContent>
+      {chartData && chartData?.length > 0 && (
+        <CardFooter className='flex-col gap-2 text-sm'>
+          <div className='flex items-center gap-2 leading-none text-center'>
+            The average user age is{' '}
+            {Math.round(
+              data
+                .map((m) => Number(m.age))
+                .reduce(
+                  (accumulator, currentValue) => accumulator + currentValue,
+                  0
+                ) / data.length
+            )}
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 }

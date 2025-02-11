@@ -52,7 +52,13 @@ export default function UsersPage() {
         ) : (
           <DataTable
             columns={UserTableColumns}
-            data={users}
+            data={users?.map((user) => ({
+              ...user,
+              customDisplay:
+                user?.custom && Object.keys(user?.custom)?.length > 0
+                  ? Object.entries(user?.custom).map(([k, v]) => `${k}: ${v}`)
+                  : undefined,
+            }))}
             handleEdit={(data: User) => {
               setUser(data);
               setOpen(true);

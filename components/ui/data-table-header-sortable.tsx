@@ -20,7 +20,10 @@ export function DataTableHeaderSortable<TData>({
       onClick={() => column.toggleSorting()}
       className='px-0'
     >
-      {String(columnName[0]).toLocaleUpperCase() + columnName.slice(1)}
+      {column?.columnDef?.header &&
+      typeof column?.columnDef?.header === 'string'
+        ? column?.columnDef?.header
+        : String(columnName[0]).toLocaleUpperCase() + columnName.slice(1)}
       {column.getIsSorted() === 'asc' ? (
         <ArrowUp {...sortedIconProps} />
       ) : column.getIsSorted() === 'desc' ? (

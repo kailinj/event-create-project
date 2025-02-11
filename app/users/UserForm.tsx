@@ -266,6 +266,7 @@ export default function UserForm({
                       }}
                       variant='outline'
                       size='sm'
+                      type='button'
                     >
                       Remove
                     </Button>
@@ -285,6 +286,7 @@ export default function UserForm({
             }}
             variant='outline'
             size='sm'
+            type='button'
           >
             Add custom field
           </Button>
