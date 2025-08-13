@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist_Mono, Moderustic } from "next/font/google";
 import "./globals.css";
@@ -32,6 +33,7 @@ export default function RootLayout({
           <div className="flex-1">{children}</div>
         </div>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
