@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "User management",
   description: "Built with Next.js, Prisma, and Tailwind CSS via shadcn/ui",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
