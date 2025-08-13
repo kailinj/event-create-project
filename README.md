@@ -1,36 +1,3 @@
-# EventCreate project
-
-<details>
-<summary>Exercise overview</summary>
-
-## Developer Exercise
-
-Build a responsive single-page application (SPA) using React that allows a user to submit and edit existing data in a table interface.
-
-### The application should:
-
-- Allow the user to submit a form with the following fields: Name, Email, and Age
-- Allow users to add/remove a custom field dynamically to the form
-- Validate inputs (eg, Email format, Age as a positive number)
-
-### After submitting the form, the user should be able to:
-
-- View the data of their submissions in a table
-- Edit previously submitted data
-- Visualize their data as a chart (e.g., Bar or Pie Chart) to visualize the data (use a library like Chart.js or D3.js) that updates when new information is submitted.
-
-### Notes
-
-- The application should be optimized for fast loading and handle up to large data entries without noticeable lag.
-- Building a backend is not necessary but exercise should showcase how data is handled and loaded client side on the application.
-- Buidling for all test cases and scenarios is not necessary but code should showcase your knowledge and experience with testing front end code.
-
-### Deliverables
-
-- Submit a GitHub repository link containing your code with a README on how to run the project.
-- Feel free to add any additional information about your design decisions here.
-</details>
-
 ## How to run this project
 
 - Clone repo locally
@@ -75,17 +42,17 @@ Build a responsive single-page application (SPA) using React that allows a user 
 - [**@faker-js/faker**](https://fakerjs.dev/): Used along with playwright to generate mock data for testing.
 
 ### Items of note & takeaways
-- I wasn't sure if the custom field was supposed to be a single string or a key-value pair, but figured that the latter would be more useful.
-- The "age" chart isn't a very realistic use case, but I figured displaying multiple charts using the proposed data structure was better than introducing additional properties merely for the benefit of a nice-looking chart. 
+
+- The "age" chart isn't a very realistic use case, but I figured displaying multiple charts using the proposed data structure was better than introducing additional properties merely for the benefit of a nice-looking chart.
 - Some other charts that I considered were:
-    - Users created over time
-    - Number of users per age
-- Using Next.js may not have been the best choice for this project, as the directory structure & naming conventions don't necessarily align with how I like to organize React-only FE apps, but hopefully it isn't too difficult to navigate.
+  - Users created over time
+  - Number of users per age
 - I created some basic Playwright tests, but given more time I would have been more intentional in what functionality I was testing and how I was selecting items in the UI
   - Ideally, I would use an attribute that is unlikely to change, even if the copy does (something like `[data-test-id]`)
   - The "Can add users & see them in table" test should be updated to check across all pages for the new user
 
 ### Other features that I'd like to implement
+
 - Search & filter within the table
 - Delete functionality per user (this would include either an "Are you sure?" dialog or would give the user the option to "Undo" on the success toast)
 - Allowing users to add as many custom fields as they'd like
@@ -94,7 +61,7 @@ Build a responsive single-page application (SPA) using React that allows a user 
 - Better loading animations
 - Editing rows within the table instead of needing to open the dialog
 
-----
+---
 
 <details>
 <summary>Auto-generated documentation</summary>
